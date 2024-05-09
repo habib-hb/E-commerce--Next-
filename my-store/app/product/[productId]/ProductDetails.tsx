@@ -30,7 +30,7 @@ const Horizontal = () => {
 }
 const ProductDetails:React.FC<ProductDetailsProps> = ({product}) => {
 
-    const [CartProduct , setCartProduct] = useState<CartProductType>({
+    const [cartProduct , setCartProduct] = useState<CartProductType>({
         id: product.id,
         name: product.name,
         description: product.description,
@@ -41,11 +41,20 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({product}) => {
         price: product.price
     })
 
+    console.log(cartProduct)
+
     const productRating= product.reviews.reduce((acc:number, item:any)=>{
         return acc + item.rating
     } , 0) / product.reviews.length;
 
-    const handleColorSelect = useCallback((value:SelectedImgType)=>{}, [CartProduct.selectedImg])
+    const handleColorSelect = useCallback((value:SelectedImgType)=>{
+        setCartProduct((prev)=>{
+            return {
+                ...prev,
+                selectedImg: value
+            }
+        })
+    }, [cartProduct.selectedImg])
 
     return (<div className="grid grid-cols-1 md:grid-cols-2 gap-12">
         <div>Images</div>
@@ -68,7 +77,7 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({product}) => {
             <Horizontal/>
             <SetColor 
              images={product.images}
-             cartProduct={CartProduct}
+             cartProduct={cartProduct}
              handleColorSelect={handleColorSelect}  />
             <Horizontal/>
             <div>quantity</div>
