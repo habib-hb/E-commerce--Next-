@@ -1,6 +1,7 @@
 "use client";
 
 import SetColor from "@/app/components/products/SetColor";
+import SetQuantity from "@/app/components/products/SetQuantity";
 import { Rating } from "@mui/material";
 import { useCallback, useState } from "react";
 
@@ -80,7 +81,11 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({product}) => {
              cartProduct={cartProduct}
              handleColorSelect={handleColorSelect}  />
             <Horizontal/>
-            <div>quantity</div>
+            <SetQuantity
+                cartProduct= {cartProduct}
+                handleQtyIncrease={handleQtyIncrease}
+                handleQtyDecrease={handleQtyDecrease}
+            />
             <Horizontal/>
             <div>add to cart</div>
         </div>
