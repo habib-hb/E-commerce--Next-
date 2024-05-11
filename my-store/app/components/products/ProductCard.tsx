@@ -17,7 +17,7 @@ const ProductCard:React.FC<ProductCardProps> = ({data}) => {
 
     const router = useRouter();
 
-    return ( 
+    return (
     <div 
     onClick={()=> router.push(`/product/${data.id}`)}
     className="
