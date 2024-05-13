@@ -131,7 +131,7 @@ const ProductDetails:React.FC<ProductDetailsProps> = ({product}) => {
                 <span>Product added to cart</span>
                 </p>
 
-                <div>
+                <div className="max-w-[300px]">
                     <Button label="View Cart" outline onClick={()=>{
                         router.push("/cart")
                     } }/>
