@@ -7,7 +7,9 @@ import {toast} from 'react-hot-toast'
 type CartContextType = {
     cartTotalQty: number;
     cartProducts: CartProductType[] | null;
-    handleAddProductToCart: (product: CartProductType) => void
+    handleAddProductToCart: (product: CartProductType) => void;
+    handleRemoveProductFromCart: (product: CartProductType) => void;
+    handleCartQtyIncrease:(product: CartProductType) => void;
 };
 
 export const CartContext = createContext<CartContextType | null>(null);
@@ -50,10 +52,55 @@ const handleAddProductToCart = useCallback((product:CartProductType)=>{
 
 }, [])
 
+const handleRemoveProductFromCart = useCallback((product: CartProductType)=>{
+
+    if(cartProducts){
+        const filteredProducts = cartProducts.filter((item)=>{
+            return item.id !== product.id
+        })
+
+        setCartProducts(filteredProducts)
+
+        toast.success("Product removed");
+
+        localStorage.setItem('eShopCartItems' , JSON.stringify(filteredProducts))
+
+
+
+    }
+
+}, [cartProducts])
+
+const handleCartQtyIncrease = useCallback((product: CartProductType)=>{
+
+    let updatedCart;
+
+    if(product.quantity === 99) {
+        return toast.error("Ooop! Maximum Reached");
+    }
+
+    if(cartProducts){
+        updatedCart = [...cartProducts]
+
+        const existingIndex = cartProducts.findIndex((item)=>item.id === product.id);
+
+        if(existingIndex > -1){
+            updatedCart[existingIndex].quantity = updatedCart[existingIndex].quantity + 1
+        }
+
+        setCartProducts(updatedCart)
+        localStorage.setItem('eShopCartItems' , JSON.stringify(updatedCart))
+ 
+    }
+
+} , [cartProducts])
+
 const value = {
     cartTotalQty,
     cartProducts,
     handleAddProductToCart,
+    handleRemoveProductFromCart,
+    handleCartQtyIncrease
 }
 
 return <CartContext.Provider value={value} {...props}/>;
