@@ -5,6 +5,7 @@ const FormWrap = ({children}: {children:React.ReactNode}) => {
         h-full
         flex
         items-center
+        justify-center
         pb-12
         pt-24
         ">
