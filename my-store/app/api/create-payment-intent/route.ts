@@ -12,7 +12,7 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
 const calculateOrderAmount = (items: CartProductType[])=> {
     const totalPrice = items.reduce((acc, item)=>{
         const itemTotal = item.price * item.quantity;
-        return acc * itemTotal;
+        return acc + itemTotal;
     } , 0);
 
     return totalPrice;
@@ -29,8 +29,12 @@ export async function POST(request: Request){
     const body = await request.json()
 
     const {items , payment_intent_id } = body
+   
 
     const total = calculateOrderAmount(items) * 100
+
+    console.log("-----------------items object check ", items )
+    console.log("-----------------total amount checking ", total )
 
     const orderData = {
         user: {connect: {id:currentUser.id}},
