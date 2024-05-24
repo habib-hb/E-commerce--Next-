@@ -25,7 +25,8 @@ const CheckoutClient = () => {
 
             fetch('/api/create-payment-intent', {
                 method: 'POST',
-                headers: {'Content-Type' : 'application/json' },
+                headers: {'Content-Type' : 'application/json'
+                },
                 body: JSON.stringify({
                     items: cartProducts,
                     payment_intent_id: paymentIntent
@@ -40,6 +41,7 @@ const CheckoutClient = () => {
             }).then((data)=>{
                 setClientSecret(data.paymentIntent.client_secret)
                 handleSetPaymentIntent(data.paymentIntent.id)
+                toast.success("Payment Successful :)")
             }).catch((error)=>{
                 setError(true)
                 console.log("Error", error)
