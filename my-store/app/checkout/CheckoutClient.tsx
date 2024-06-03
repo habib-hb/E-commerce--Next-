@@ -1,9 +1,12 @@
 "use client";
 
 import { useCart } from "@/hooks/useCart";
+import { loadStripe } from "@stripe/stripe-js";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string)
 
 const CheckoutClient = () => {
 
